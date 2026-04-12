@@ -1,13 +1,22 @@
 import os
 from pathlib import Path
-import dj_database_url   # ✅ ADDED
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ================== SECURITY ==================
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
+
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+
+# TEMP FIX (no 400 error)
 ALLOWED_HOSTS = ['*']
+
+# CSRF FIX (IMPORTANT for Render)
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.onrender.com"
+]
+
 
 # ================== APPLICATIONS ==================
 INSTALLED_APPS = [
@@ -19,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'recommender'
 ]
+
 
 # ================== MIDDLEWARE ==================
 MIDDLEWARE = [
@@ -32,7 +42,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'crop_site.urls'
+
 
 # ================== TEMPLATES ==================
 TEMPLATES = [
@@ -50,9 +62,11 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'crop_site.wsgi.application'
 
-# ================== DATABASE (UPDATED) ==================
+
+# ================== DATABASE ==================
 DATABASES = {
     'default': dj_database_url.parse(
         os.environ.get('DATABASE_URL'),
@@ -60,6 +74,7 @@ DATABASES = {
         ssl_require=True
     )
 }
+
 
 # ================== PASSWORD VALIDATION ==================
 AUTH_PASSWORD_VALIDATORS = [
@@ -69,19 +84,23 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+
 # ================== INTERNATIONALIZATION ==================
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
 
+
 # ================== STATIC FILES ==================
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+
 # ================== DEFAULT PK ==================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 # ================== LOGIN ==================
 LOGIN_URL = '/login/'
