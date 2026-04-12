@@ -3,15 +3,15 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY
-SECRET_KEY = 'django-insecure-qjxcd^v4caa2%-grz@8z@j9i7fz2vpvg=wzo6^^2krtwvm-6rj'
+# ================== SECURITY ==================
+SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 
-DEBUG = True   # ⚠️ Change to False after deployment
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
 
-# APPLICATIONS
+# ================== APPLICATIONS ==================
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -23,10 +23,10 @@ INSTALLED_APPS = [
 ]
 
 
-# MIDDLEWARE (UPDATED for WhiteNoise)
+# ================== MIDDLEWARE ==================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ ADDED
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -39,10 +39,11 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'crop_site.urls'
 
 
+# ================== TEMPLATES ==================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],  # you can add templates folder later if needed
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -58,7 +59,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'crop_site.wsgi.application'
 
 
-# DATABASE (SQLite for now)
+# ================== DATABASE ==================
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -67,7 +68,7 @@ DATABASES = {
 }
 
 
-# PASSWORD VALIDATION
+# ================== PASSWORD VALIDATION ==================
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -76,24 +77,24 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# INTERNATIONALIZATION
+# ================== INTERNATIONALIZATION ==================
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
 
 
-# STATIC FILES (IMPORTANT FOR RENDER)
+# ================== STATIC FILES ==================
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # ✅ ADDED
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-# DEFAULT PRIMARY KEY
+# ================== DEFAULT PK ==================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# LOGIN
+# ================== LOGIN ==================
 LOGIN_URL = '/login/'
