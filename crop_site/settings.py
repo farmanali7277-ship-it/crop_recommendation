@@ -1,15 +1,13 @@
 import os
 from pathlib import Path
+import dj_database_url   # ✅ ADDED
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ================== SECURITY ==================
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
-
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
-
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
-
 
 # ================== APPLICATIONS ==================
 INSTALLED_APPS = [
@@ -21,7 +19,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'recommender'
 ]
-
 
 # ================== MIDDLEWARE ==================
 MIDDLEWARE = [
@@ -35,9 +32,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
 ROOT_URLCONF = 'crop_site.urls'
-
 
 # ================== TEMPLATES ==================
 TEMPLATES = [
@@ -55,18 +50,16 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'crop_site.wsgi.application'
 
-
-# ================== DATABASE ==================
+# ================== DATABASE (UPDATED) ==================
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.parse(
+        os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
-
 
 # ================== PASSWORD VALIDATION ==================
 AUTH_PASSWORD_VALIDATORS = [
@@ -76,25 +69,19 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
 # ================== INTERNATIONALIZATION ==================
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
 
-
 # ================== STATIC FILES ==================
 STATIC_URL = '/static/'
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 
 # ================== DEFAULT PK ==================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 # ================== LOGIN ==================
 LOGIN_URL = '/login/'
