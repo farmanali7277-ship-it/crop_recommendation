@@ -1,1 +1,1 @@
-web: gunicorn crop_site.wsgi
+web: gunicorn crop_site.wsgi --workers 1 --threads 2

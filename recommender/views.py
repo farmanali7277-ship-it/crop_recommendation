@@ -44,9 +44,14 @@ def signup_view(request):
 from .ml.loader import predict_one, load_bundle
 from django.contrib.auth.decorators import login_required, user_passes_test
 
+from .ml.loader import load_bundle
+
+bundle = load_bundle()
+model = bundle["model"]
+feature_order = bundle["feature_cols"]
 @login_required
 def predict_view(request):
-    feature_order= load_bundle()["feature_cols"]
+    #feature_order= load_bundle()["feature_cols"]
     result=None
     last_data=None
     
