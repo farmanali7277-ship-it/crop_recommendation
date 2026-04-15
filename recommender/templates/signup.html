@@ -101,7 +101,7 @@
                               </div>
 
                         </div>
-                        <button class="btn btn-success mt-3 w-100" type="submit" id="signupBtn">
+                        <button class="btn btn-success mt-3 w-100" type="submit" id="signupBtn" disabled>
                             <span>Create Account</span>
                         </button>
 
@@ -130,5 +130,12 @@
     };
     toggle('togglePwd1','pwd1');
     toggle('togglePwd2','pwd2');
+    
+    const agreeCheckbox = document.getElementById("agree");
+    const signupBtn = document.getElementById("signupBtn");
+
+    agreeCheckbox.addEventListener("change", function () {
+        signupBtn.disabled = !this.checked;
+    });
 </script>    
 {% endblock %}
