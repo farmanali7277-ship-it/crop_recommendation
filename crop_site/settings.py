@@ -14,8 +14,19 @@ ALLOWED_HOSTS = ['*']
 
 # CSRF FIX (IMPORTANT for Render)
 CSRF_TRUSTED_ORIGINS = [
-    "https://*.onrender.com"
+    "https://crop-recommendation-mhox.onrender.com",
 ]
+
+# IMPORTANT: Fix random CSRF failures
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# Fix HTTPS behind Render proxy
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Helps avoid CSRF issues due to domain mismatch
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SAMESITE = 'Lax'
 
 
 # ================== APPLICATIONS ==================
