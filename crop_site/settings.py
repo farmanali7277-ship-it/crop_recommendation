@@ -77,10 +77,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'crop_site.wsgi.application'
 
 
+
 # ================== DATABASE ==================
+
+DATABASE_URL = 'postgresql://crop_user:7nzHGci8QBDZ51G9nbKEe5nc9A7ZWCeI@dpg-d80qkqrrjlhs73ainjg0-a.oregon-postgres.render.com/crop_db_1cis'
+
 DATABASES = {
     'default': dj_database_url.parse(
-        os.environ.get('DATABASE_URL'),
+        DATABASE_URL,
         conn_max_age=600,
         ssl_require=True
     )
